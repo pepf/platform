@@ -37,11 +37,9 @@ export default class PostViewController extends React.Component {
         const profiles = UserStore.getProfiles();
 
         let lastViewed = Number.MAX_VALUE;
-        let lastViewedBottom = Number.MAX_VALUE;
         const member = ChannelStore.getMyMember(channel.id);
         if (member != null) {
             lastViewed = member.last_viewed_at;
-            lastViewedBottom = member.last_viewed_at;
         }
 
         const joinLeaveEnabled = PreferenceStore.getBool(Constants.Preferences.CATEGORY_ADVANCED_SETTINGS, 'join_leave', true);
@@ -60,7 +58,7 @@ export default class PostViewController extends React.Component {
             statuses,
             atTop: PostStore.getVisibilityAtTop(channel.id),
             lastViewed,
-            lastViewedBottom,
+            lastViewedBottom: new Date().getTime(),
             ownNewMessage: false,
             loading,
             scrollType: ScrollTypes.NEW_MESSAGE,
@@ -174,6 +172,7 @@ export default class PostViewController extends React.Component {
             this.setState({
                 channel,
                 lastViewed,
+                lastViewedBottom: new Date().getTime(),
                 ownNewMessage: false,
                 profiles: JSON.parse(JSON.stringify(profiles)),
                 statuses,

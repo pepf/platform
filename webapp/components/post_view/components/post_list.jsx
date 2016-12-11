@@ -92,6 +92,12 @@ export default class PostList extends React.Component {
                 }
             }
         }
+
+        // When all visible posts in the list are considered "new",
+        // the indicator doesnt make sense
+        if (unViewedCount >= this.props.postList.order.length) {
+            unViewedCount = 0;
+        }
         this.setState({unViewedCount});
     }
 
